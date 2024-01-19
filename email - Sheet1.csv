@@ -1,0 +1,6 @@
+email_id,person_id,email_address
+1,1,john.doe@example.com
+2,2,jane.smith@example.com
+3,3,mike.jones@example.com
+4,1,susan.white@example.com
+5,2,david.wilson@example.com
