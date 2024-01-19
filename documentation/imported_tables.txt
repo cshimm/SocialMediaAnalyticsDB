@@ -1,0 +1,18 @@
+dropped tables: for some reason these tables show up when connecting to db when they aren't in the sqp model & ERD diagram
+example
+user
+socials
+
+tables I've imported:
+address
+city
+country
+email (had old table attributes)
+phone (had old table attributes)
+device_make
+
+
+
+
+table that won't update:
+device
