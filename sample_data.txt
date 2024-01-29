@@ -1,0 +1,28 @@
+# BENDOVER Data Feed Sample
+
+# User 1
+User_ID_1 | Full_Name: Alice Johnson, Username: @aliJ, Email: alice.j@example.com, Phone: 555-1234, Date_of_Birth: 1990-05-15, Location: Unknown, Bio: Nature lover | Coffee addict | Explorer
+    Posts:
+        Post_1 | Post_ID: 123456, Content: Just saw the most amazing sunset! 🌅, Likes: 58, Comments: 12, Tags: nature, sunset, Device_Used: iPhone 11, Date_Posted: 2023-02-10T15:20:30
+        Post_2 | Post_ID: 123457, Content: Can't believe it's Monday again 😩, Likes: 20, Comments: 5, Tags: rant, monday, Device_Used: Unknown, Date_Posted: Unknown
+
+# User 2
+User_ID_2 | Full_Name: Bob Smith, Username: @bob_smith, Email: Unknown, Phone: Unknown, Date_of_Birth: Unknown, Location: New York, USA, Bio: Foodie | Tech enthusiast
+    Posts:
+        Post_1 | Post_ID: 123458, Content: Trying out a new recipe tonight! 🍲, Likes: 30, Comments: 8, Tags: food, cooking, Device_Used: Android, Date_Posted: 2023-03-05T18:45:00
+        Post_2 | Post_ID: 123459, Content: This new gadget is a game-changer! 🔥, Likes: 45, Comments: Unknown, Tags: tech, Device_Used: Unknown, Date_Posted: Unknown
+
+# User 3
+User_ID_3 | Full_Name: Cindy Wong, Username: @cindy_w, Email: cindy.w@example.com, Phone: 555-5678, Date_of_Birth: 1985-12-10, Location: Paris, France, Bio: Travel addict | Dreamer
+    Posts:
+        Post_1 | Post_ID: 123460, Content: Exploring the hidden gems of the world! 🌍, Likes: Unknown, Comments: Unknown, Tags: travel, adventure, Device_Used: iPhone 12, Date_Posted: Unknown
+        Post_2 | Post_ID: Unknown, Content: Lost in the moment... #Dreamer, Likes: 15, Comments: 3, Tags: unknown, Device_Used: Unknown, Date_Posted: 2023-04-20T09:10:15
+
+# Purchases
+User_Purchases | User_ID_1: Purchase_ID: 98765, Product: Coffee Beans, Amount: $20.00, Date: 2023-02-15 | User_ID_2: Purchase_ID: Unknown, Product: Unknown, Amount: Unknown, Date: Unknown | User_ID_3: Purchase_ID: 98766, Product: Flight Tickets, Amount: $500.00, Date: 2023-03-10
+
+# Comments
+User_Comments | User_ID_1: Comment_ID: 78901, Post_ID: 123458, Content: Looks delicious! Can you share the recipe?, Date: 2023-03-05T19:30:45 | User_ID_2: Comment_ID: Unknown, Post_ID: Unknown, Content: Unknown, Date: Unknown | User_ID_3: Comment_ID: 78902, Post_ID: 123460, Content: Amazing view! Where is this?, Date: Unknown
+
+# Login/Logout
+User_Login_Logout | User_ID_1: Login_Time: 2023-02-10T15:00:00, Logout_Time: 2023-02-10T16:30:00, Device_Used: iPhone 11 | User_ID_2: Login_Time: Unknown, Logout_Time: Unknown, Device_Used: Unknown | User_ID_3: Login_Time: 2023-04-20T08:45:00, Logout_Time: Unknown, Device_Used: iPhone 12
