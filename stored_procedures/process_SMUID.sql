@@ -7,5 +7,6 @@ BEGIN
     IF SM_social_account_id IS NULL THEN
 		INSERT INTO social_account (SMUID) values (p_SMUID);
 		SET SM_social_account_id = last_insert_id();
+	-- Else use found social media account to work on in other stored procedures
     END IF;
 END
