@@ -383,8 +383,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`purchase` (
   `seller_acc_id` INT NULL DEFAULT NULL,
   `buyer_acc_id` INT NULL DEFAULT NULL,
   PRIMARY KEY (`purchase_id`),
-  INDEX `pur_seller_id_idx` (`seller_acc_id` ASC) VISIBLE,
   INDEX `pur_buyer_id_idx` (`buyer_acc_id` ASC) VISIBLE,
+  INDEX `pur_seller_id_idx` (`seller_acc_id` ASC) VISIBLE,
   CONSTRAINT `pur_buyer_id`
     FOREIGN KEY (`buyer_acc_id`)
     REFERENCES `mydb`.`social_account` (`social_account_id`)
@@ -759,6 +759,30 @@ CREATE TABLE IF NOT EXISTS `mydb`.`ad_clicked` (
   CONSTRAINT `ac_advertisement_id`
     FOREIGN KEY (`advertisement_id`)
     REFERENCES `mydb`.`advertisement` (`advertisement_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`social_repost`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`social_repost` (
+  `social_repost_id` INT NOT NULL,
+  `reposter_social_id` INT NULL,
+  `post_id` INT NULL,
+  `date` DATETIME NULL,
+  PRIMARY KEY (`social_repost_id`),
+  INDEX `sr_reposter_id_idx` (`reposter_social_id` ASC) VISIBLE,
+  INDEX `sr_post_id_idx` (`post_id` ASC) VISIBLE,
+  CONSTRAINT `sr_reposter_id`
+    FOREIGN KEY (`reposter_social_id`)
+    REFERENCES `mydb`.`social_account` (`social_account_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `sr_post_id`
+    FOREIGN KEY (`post_id`)
+    REFERENCES `mydb`.`social_post` (`social_post_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;

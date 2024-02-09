@@ -1,0 +1,30 @@
+Changes made: 2/8/2024
+
+
+ERD:
+	- Re-organized ERD diagram to space out a bit more and prevent lines from crossing
+	
+	- Combined logout_event and login_even tables (refer to inquiry #3) 
+		-added new event_type window
+
+Added Table Attributes:
+	- social_post table <-- 
+
+
+Documentation:
+	- Changed FBUID -> SMUID for (Social Media Uer ID)
+
+
+
+Inquiry:
+1. Wouldn't we connect SM_data_feed to social acount by mentions? Since technically SMUID won't always be directly connected to a person in social account? We can maybe set a condition to see if SMUID matches? 
+
+2. To connect the SM_data_feed to social_account, should we have a link and also a transactional table?
+
+3. Should we take the logout_event & login_event table and combine it to a device_event table? 
+	-It will contain: device_event_id, deviceId, dateTime, event_id
+	-have another table connected called event_type table containing: event_id, event_name
+		-This table can contain a lot more than just logout, login but also failed login & wrong password?
+
+Concerns:
+1. We need to make updates for inserted data
