@@ -13,12 +13,14 @@ ERD:
 	- added new event_type table, attributes: event_type_id, event_name
 		-this can hold all the types for the logs (log in, log out, failed log in) and even for social event types (user post, company post, group post, etc)
 
+	- added new event nature table that connects to social_events table
+
 	- added new ip_address table, attributesL ip_address_id, ip_address, location_id
 		- ip addresses do link to locations right? 
 	
 	**}
 
-	- Changed social_post -> social_event & add new attribute for event_type_id
+	- Changed social_post -> social_event & add new attribute for event_type_id, event_nature_id
 		- changed attribute name: social_post_id -> social_event_id
 			- (also changed name of id in social_comment, _repost, _like, _mention)
 
@@ -37,11 +39,16 @@ ERD:
 		- tables: social_comment, _repost, _like, _mention, _event, purchase
 	
 	- added new location table (different from address, as these can be places like restaurants, parks, etc)
-		- attributes: location_id, location_name, city_id
+		- attributes: location_id, location_name, social_account_id, city_id
 		- I'm not sure if we should connect it to either social_account or social_event table (the location table can act as locations that the social account has been known to be or is related which can be useful)
+
+	- added new attribute to SM_data_feed: data_feed_id (so it has a unique primary key)
 
 Documentation for docs:
 	- Changed FBUID -> SMUID for (Social Media Uer ID)
+
+	- I combined the trable from event_id with the evcatcodes table because it doesn't really make snese that the event_id will have codes? It makes more sense to be part of the evcatcodes
+		- also I took out ideology/related from the table because it can be determined from hashtags to the event
 
 
 
@@ -62,13 +69,19 @@ Inquiry:
 
 Concerns:
 1. We need to make updates for inserted data in csv files & other files?
-	- logout_event, login_event -> device_event_log + event_type
+	- logout_event, login_event -> device_event_log + event_type + event_nature
 	- device_model: device_year attribute
 	- social_post -> social_event table
 	- person table: took out occupation attribute
 	- occupation table & occupation_status table
 	- location table
 	- ip address
+	- SM_data_feed
 
 2. Update Stored Programs?
 	- determine event type: Should we add more codes for user log in failed? 
+
+
+
+Stored Procedure:
+1. process_eventtype.sql
