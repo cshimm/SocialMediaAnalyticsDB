@@ -53,9 +53,10 @@ BEGIN
         -- first case if unknown event or event in social_event
         WHEN evcat1 = 0 || evcat1 = 4
         THEN CALL UpsertSocialEvent(event_id, evcat1, evcat2, timeonevent);
+        
         -- second case for device_event_log
         WHEN evcat1 > 0 && evcat1 < 4
-        THEN
+        THEN CALL UpsertDeviceLog(event_id, evcat1, timeonevent);
 
         -- third case for social_like
         WHEN evcat1 = 5
@@ -99,12 +100,38 @@ BEGIN
     FROM social_event
     WHERE social_event_id = event_id;
 
+    -- if event_id exists, then just update otherwise create an entry
     IF entry_exist > 0 THEN
             UPDATE social_event
             SET event_type_id = evcat1, event_nature_id = evcat2, event_time = dateTime1
             WHERE social_event_id = event_id;
         ELSE
-            INSERT INTO social_event (social_event_id, event_type_id, event_nature_id,)
+            INSERT INTO social_event (social_event_id, event_type_id, event_nature_id, event_time)
+            VALUES (event_id, evcat1, evcat2, dateTime1);
+    END IF;
+END //
+DELIMITER ;
 
+-- Code to update or insert table
+DELIMITER //
+CREATE PROCEDURE UpsertDeviceLog(IN event_id INT, IN evcat1 INT, IN dateTime1 DATETIME)
+BEGIN
+    DECLARE entry_exist INT;
+
+    --check if the entry exists
+    SELECT COUNT(*)
+    INTO entry_exist
+    FROM device_event_log
+    WHERE device_event_id = event_id;
+
+    -- if event_id exists, then just update otherwise create an entry
+    IF entry_exist > 0 THEN
+            UPDATE device_event_log
+            SET device_event_id = evcat1, event_time = dateTime1
+            WHERE device_event_id = event_id;
+        ELSE
+            INSERT INTO device_event_log (social_event_id, event_type_id, event_time)
+            VALUES (event_id, evcat1, dateTime1);
+    END IF;
 END //
 DELIMITER ;

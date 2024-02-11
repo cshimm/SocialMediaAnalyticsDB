@@ -345,7 +345,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mydb`.`device_event_log` (
   `device_event_id` INT NOT NULL AUTO_INCREMENT,
   `device_id` INT NULL DEFAULT NULL,
-  `dateTime` DATETIME NOT NULL,
+  `event_time` DATETIME NOT NULL,
   `ip_address_id` INT NULL,
   `event_type_id` INT NULL,
   PRIMARY KEY (`device_event_id`),
@@ -408,7 +408,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`purchase` (
   `purchase_id` INT NOT NULL AUTO_INCREMENT,
-  `dateTime` DATETIME NULL DEFAULT NULL,
+  `event_time` DATETIME NULL DEFAULT NULL,
   `seller_acc_id` INT NULL DEFAULT NULL,
   `buyer_acc_id` INT NULL DEFAULT NULL,
   PRIMARY KEY (`purchase_id`),
@@ -470,7 +470,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`social_event` (
   `social_event_id` INT NOT NULL AUTO_INCREMENT,
   `account_id` INT NULL DEFAULT NULL,
   `content` VARCHAR(400) NULL DEFAULT NULL,
-  `dateTime` DATETIME NULL DEFAULT NULL,
+  `event_time` DATETIME NULL DEFAULT NULL,
   `event_type_id` INT NULL,
   `event_nature_id` INT NULL,
   PRIMARY KEY (`social_event_id`),
@@ -492,55 +492,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`social_event` (
     REFERENCES `mydb`.`event_nature` (`event_nature_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`social_comment`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`social_comment` (
-  `social_comment_id` INT NOT NULL AUTO_INCREMENT,
-  `social_account_id` INT NULL DEFAULT NULL,
-  `social_event_id` INT NULL DEFAULT NULL,
-  `content` VARCHAR(400) NULL DEFAULT NULL,
-  `dateTime` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`social_comment_id`),
-  INDEX `sc_post_id_idx` (`social_event_id` ASC) VISIBLE,
-  INDEX `sc_account_id_idx` (`social_account_id` ASC) VISIBLE,
-  CONSTRAINT `sc_account_id`
-    FOREIGN KEY (`social_account_id`)
-    REFERENCES `mydb`.`social_account` (`social_account_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `sc_post_id`
-    FOREIGN KEY (`social_event_id`)
-    REFERENCES `mydb`.`social_event` (`social_event_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`social_like`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`social_like` (
-  `social_like_id` INT NOT NULL AUTO_INCREMENT,
-  `post_id` INT NULL DEFAULT NULL,
-  `account_id` INT NULL DEFAULT NULL,
-  `dateTime` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`social_like_id`),
-  INDEX `sl_post_id_idx` (`post_id` ASC) VISIBLE,
-  INDEX `sl_account_id_idx` (`account_id` ASC) VISIBLE,
-  CONSTRAINT `sl_account_id`
-    FOREIGN KEY (`account_id`)
-    REFERENCES `mydb`.`social_account` (`social_account_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `sl_post_id`
-    FOREIGN KEY (`post_id`)
-    REFERENCES `mydb`.`social_event` (`social_event_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -640,7 +591,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`political_preference` (
   `person_id` INT NULL,
   `political_affiliation_code` INT NULL,
   `intensity` INT NULL,
-  `timestamp` DATETIME NULL,
+  `event_time` DATETIME NULL,
   PRIMARY KEY (`political_preference_id`),
   INDEX `ppref_person_id_idx` (`person_id` ASC) VISIBLE,
   INDEX `ppref_political_party_id_idx` (`political_affiliation_code` ASC) VISIBLE,
@@ -754,7 +705,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`social_issue_view` (
   `person_id` INT NULL,
   `social_issue_lookup_code` INT NULL,
   `intensity_code` INT NULL,
-  `timestamp` DATETIME NULL,
+  `event_time` DATETIME NULL,
   PRIMARY KEY (`social_issue_view_id`),
   INDEX `siv_person_id_idx` (`person_id` ASC) VISIBLE,
   INDEX `siv_social_issue_lookup_code_idx` (`social_issue_lookup_code` ASC) VISIBLE,
@@ -794,30 +745,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`social_mention`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`social_mention` (
-  `social_mention_id` INT NOT NULL AUTO_INCREMENT,
-  `social_post_id` INT NULL,
-  `account_mentioned_id` INT NULL,
-  `date` DATETIME NULL,
-  PRIMARY KEY (`social_mention_id`),
-  INDEX `sm_social_post_id_idx` (`social_post_id` ASC) VISIBLE,
-  INDEX `sm_account_mentioned_idx` (`account_mentioned_id` ASC) VISIBLE,
-  CONSTRAINT `sm_social_post_id`
-    FOREIGN KEY (`social_post_id`)
-    REFERENCES `mydb`.`social_event` (`social_event_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `sm_account_mentioned`
-    FOREIGN KEY (`account_mentioned_id`)
-    REFERENCES `mydb`.`social_account` (`social_account_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `mydb`.`advertisement`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`advertisement` (
@@ -834,7 +761,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`ad_clicked` (
   `ad_clicked_id` INT NOT NULL AUTO_INCREMENT,
   `advertisement_id` INT NULL,
   `social_account_id` INT NULL,
-  `dateTime` DATETIME NULL,
+  `event_time` DATETIME NULL,
   PRIMARY KEY (`ad_clicked_id`),
   INDEX `ac_social_account_id_idx` (`social_account_id` ASC) VISIBLE,
   INDEX `ac_advertisement_id_idx` (`advertisement_id` ASC) VISIBLE,
@@ -852,26 +779,34 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`social_repost`
+-- Table `mydb`.`social_action`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`social_repost` (
-  `social_repost_id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `mydb`.`social_action` (
+  `social_action_id` INT NOT NULL,
   `social_account_id` INT NULL,
   `social_event_id` INT NULL,
-  `dateTime` DATETIME NULL,
-  PRIMARY KEY (`social_repost_id`),
-  INDEX `sr_reposter_id_idx` (`social_account_id` ASC) VISIBLE,
-  INDEX `sr_post_id_idx` (`social_event_id` ASC) VISIBLE,
-  CONSTRAINT `sr_reposter_id`
+  `event_type_id` INT NULL,
+  `content` VARCHAR(400) NULL,
+  `event_time` DATETIME NULL,
+  PRIMARY KEY (`social_action_id`),
+  INDEX `saccount_FK_idx` (`social_account_id` ASC) VISIBLE,
+  INDEX `sevent_FK_idx` (`social_event_id` ASC) VISIBLE,
+  INDEX `seventtype_FK_idx` (`event_type_id` ASC) VISIBLE,
+  CONSTRAINT `saccount_FK`
     FOREIGN KEY (`social_account_id`)
     REFERENCES `mydb`.`social_account` (`social_account_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `sr_post_id`
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `sevent_FK`
     FOREIGN KEY (`social_event_id`)
     REFERENCES `mydb`.`social_event` (`social_event_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `seventtype_FK`
+    FOREIGN KEY (`event_type_id`)
+    REFERENCES `mydb`.`event_type` (`event_type_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
