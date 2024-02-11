@@ -50,6 +50,7 @@ Documentation for docs:
 	- I combined the trable from event_id with the evcatcodes table because it doesn't really make snese that the event_id will have codes? It makes more sense to be part of the evcatcodes
 		- also I took out ideology/related from the table because it can be determined from hashtags to the event
 
+	- updated socialmediadb.sql with new forward engineer
 
 
 Inquiry:
