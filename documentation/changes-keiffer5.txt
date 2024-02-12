@@ -35,8 +35,8 @@ ERD:
 
 	- social_comment & social_event attribute: content varchar(45) -> varchar(400)
 
-	- changed date -> dateTime with DATETIME datatype
-		- tables: social_comment, _repost, _like, _mention, _event, purchase
+	- added new table: social_action, attributes: social_action_id, social_account_id, social_event_id, event_type_id, content, event_time
+		- this is so condense all the different like, comment, repost, mention actions into 1 using the event_type table
 	
 	- added new location table (different from address, as these can be places like restaurants, parks, etc)
 		- attributes: location_id, location_name, social_account_id, city_id
@@ -51,6 +51,11 @@ Documentation for docs:
 		- also I took out ideology/related from the table because it can be determined from hashtags to the event
 
 	- updated socialmediadb.sql with new forward engineer
+
+	- changed all date types to DATETIME with name event_time
+
+	- added new table: event_tag, attributes: event_tag_id, social_event_id, hashtag_id
+		- since social_event and hashtags have a many-to-many relationship, we need a linking table
 
 
 Inquiry:
@@ -85,4 +90,6 @@ Concerns:
 
 
 Stored Procedure:
-1. process_eventtype.sql
+1. process_event.sql
+	- I combined parseevatcodes, determine_event_type, time_on_event, and mentions into this one file
+	- there are sub stored procedures that are called to update/insert into tables

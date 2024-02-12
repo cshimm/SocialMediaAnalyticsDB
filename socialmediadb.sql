@@ -173,12 +173,13 @@ CREATE TABLE IF NOT EXISTS `mydb`.`SM_data_feed` (
   `SMUID` INT NULL,
   `event_id` INT NULL,
   `evcatcodes` VARCHAR(45) NULL,
-  `timeonevent` DATETIME NULL,
+  `timeonevent` VARCHAR(45) NULL,
   `ip_address` VARCHAR(45) NULL,
   `location` VARCHAR(45) NULL,
-  `device` VARCHAR(45) NULL,
-  `mentions` VARCHAR(45) NULL,
-  `hashtags` VARCHAR(45) NULL,
+  `device` VARCHAR(400) NULL,
+  `mentions` VARCHAR(400) NULL,
+  `hashtags` VARCHAR(400) NULL,
+  `content` VARCHAR(400) NULL,
   PRIMARY KEY (`data_feed_id`))
 ENGINE = InnoDB;
 
@@ -541,19 +542,12 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`tags`
+-- Table `mydb`.`hashtags`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`tags` (
-  `tags_id` INT NOT NULL AUTO_INCREMENT,
-  `tag` VARCHAR(45) NULL,
-  `social_event_id` INT NULL,
-  PRIMARY KEY (`tags_id`),
-  INDEX `t_social_post_id_idx` (`social_event_id` ASC) VISIBLE,
-  CONSTRAINT `t_social_post_id`
-    FOREIGN KEY (`social_event_id`)
-    REFERENCES `mydb`.`social_event` (`social_event_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+CREATE TABLE IF NOT EXISTS `mydb`.`hashtags` (
+  `hashtag_id` INT NOT NULL AUTO_INCREMENT,
+  `hashtag_name` VARCHAR(45) NULL,
+  PRIMARY KEY (`hashtag_id`))
 ENGINE = InnoDB;
 
 
@@ -782,7 +776,7 @@ ENGINE = InnoDB;
 -- Table `mydb`.`social_action`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`social_action` (
-  `social_action_id` INT NOT NULL,
+  `social_action_id` INT NOT NULL AUTO_INCREMENT,
   `social_account_id` INT NULL,
   `social_event_id` INT NULL,
   `event_type_id` INT NULL,
@@ -805,6 +799,29 @@ CREATE TABLE IF NOT EXISTS `mydb`.`social_action` (
   CONSTRAINT `seventtype_FK`
     FOREIGN KEY (`event_type_id`)
     REFERENCES `mydb`.`event_type` (`event_type_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`event_tag`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`event_tag` (
+  `event_tag_id` INT NOT NULL AUTO_INCREMENT,
+  `social_event_id` INT NULL,
+  `hashtag_id` INT NULL,
+  PRIMARY KEY (`event_tag_id`),
+  INDEX `even_tag_FK_idx` (`social_event_id` ASC) VISIBLE,
+  INDEX `hashtag_FK_idx` (`hashtag_id` ASC) VISIBLE,
+  CONSTRAINT `even_tag_FK`
+    FOREIGN KEY (`social_event_id`)
+    REFERENCES `mydb`.`social_event` (`social_event_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `hashtag_FK`
+    FOREIGN KEY (`hashtag_id`)
+    REFERENCES `mydb`.`hashtags` (`hashtag_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
