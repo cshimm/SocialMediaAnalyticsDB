@@ -15,7 +15,6 @@ BEGIN
     DECLARE content_hold VARCHAR(400);
     DECLARE data_feed_max INT;
 
-
     DECLARE index_val INT;
     SET index_val = 1;
 
@@ -58,7 +57,6 @@ BEGIN
             SET event_time_DT = '0000-00-00 00:00:00';
         ELSE
             SET event_time_DT = STR_TO_DATE(event_time, '%Y-%m-%d %H:%i:%s');
-
     END IF;
 
 
