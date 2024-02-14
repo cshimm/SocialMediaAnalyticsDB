@@ -1,0 +1,95 @@
+Changes made: 2/8/2024
+
+
+ERD:
+	- Re-organized ERD diagram to space out a bit more and prevent lines from crossing
+	
+	{** This is one giant combined change
+
+	- Combined logout_event and login_event tables -> device_event_log table (refer to inquiry #3) 	
+		- attributes: device_event_id, device_id, event_type_id, dateTime, ip_address_id
+		- (I feel like this table can handle all event types from post and stuff to log events like also if there is a post type event and it will also link it to an ip_address)
+
+	- added new event_type table, attributes: event_type_id, event_name
+		-this can hold all the types for the logs (log in, log out, failed log in) and even for social event types (user post, company post, group post, etc)
+
+	- added new event nature table that connects to social_events table
+
+	- added new ip_address table, attributesL ip_address_id, ip_address, location_id
+		- ip addresses do link to locations right? 
+	
+	**}
+
+	- Changed social_post -> social_event & add new attribute for event_type_id, event_nature_id
+		- changed attribute name: social_post_id -> social_event_id
+			- (also changed name of id in social_comment, _repost, _like, _mention)
+
+	- Added new attribute device_model table: model_year (unsure of datatype to use: year(4) = 4-digit string or int)
+	- Added new attribute to social_event (used to be social_post): event_type_id
+
+	- occupation table: added attributes: person_id, occupation_status_id (people can have multiple occupations? & store data of all their past professions?)
+		- new table: occupation_status table, attributes: occupation_status_id, occupation_status_name
+		- (the new table can contain "current" or "past")
+
+	- person table: took out occupation_id
+
+	- social_comment & social_event attribute: content varchar(45) -> varchar(400)
+
+	- added new table: social_action, attributes: social_action_id, social_account_id, social_event_id, event_type_id, content, event_time
+		- this is so condense all the different like, comment, repost, mention actions into 1 using the event_type table
+	
+	- added new location table (different from address, as these can be places like restaurants, parks, etc)
+		- attributes: location_id, location_name, social_account_id, city_id
+		- I'm not sure if we should connect it to either social_account or social_event table (the location table can act as locations that the social account has been known to be or is related which can be useful)
+
+	- added new attribute to SM_data_feed: data_feed_id (so it has a unique primary key)
+
+Documentation for docs:
+	- Changed FBUID -> SMUID for (Social Media Uer ID)
+
+	- I combined the trable from event_id with the evcatcodes table because it doesn't really make snese that the event_id will have codes? It makes more sense to be part of the evcatcodes
+		- also I took out ideology/related from the table because it can be determined from hashtags to the event
+
+	- updated socialmediadb.sql with new forward engineer
+
+	- changed all date types to DATETIME with name event_time
+
+	- added new table: event_tag, attributes: event_tag_id, social_event_id, hashtag_id
+		- since social_event and hashtags have a many-to-many relationship, we need a linking table
+
+
+Inquiry:
+1. Wouldn't we connect SM_data_feed to social acount by mentions? Since technically SMUID won't always be directly connected to a person in social account? We can maybe set a condition to see if SMUID matches? 
+
+2. To connect the SM_data_feed to social_account, should we have a link and also a transactional table?
+
+3. Should we take the logout_event & login_event table and combine it to a device_event table? 
+	-It will contain: device_event_id, deviceId, dateTime, event_id
+	-have another table connected called event_type table containing: event_id, event_name
+		-This table can contain a lot more than just logout, login but also failed login & wrong password?
+
+4. Should we condense social_comment, repost, like, and mention -> social_action with attributes: social_action_id, dateTime, social_event_id, social_action_type_id, content(optional depending on type_id)
+	-We can also create another table called social_action_type with attributes: social_action_type_id, social_action_type_name
+
+5. Should we connect city, state, and country? 
+
+Concerns:
+1. We need to make updates for inserted data in csv files & other files?
+	- logout_event, login_event -> device_event_log + event_type + event_nature
+	- device_model: device_year attribute
+	- social_post -> social_event table
+	- person table: took out occupation attribute
+	- occupation table & occupation_status table
+	- location table
+	- ip address
+	- SM_data_feed
+
+2. Update Stored Programs?
+	- determine event type: Should we add more codes for user log in failed? 
+
+
+
+Stored Procedure:
+1. process_event.sql
+	- I combined parseevatcodes, determine_event_type, time_on_event, and mentions into this one file
+	- there are sub stored procedures that are called to update/insert into tables
