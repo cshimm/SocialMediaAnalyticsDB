@@ -1,11 +1,11 @@
-SMUID,event_id,evcatcodes,timeonevent,ip_address,location,device,mentions,hashtags,likedata,repostdata,clickdata,users_interacted,language
-12611149,6,"(2,2,1)",11/21/2017 20:10,192.168.1,Daybury,desktop,"biden, kelsey","democrat, election, primary, november",5,2,12,"user1, user2, user3, user4, . . .",EN
-79035077,1,,1/27/2022 6:20,192.168.1,Ramirezfurt,tablet,,record study,,598,NaN,,EN
-67297762,6,"(2,1,5)",not a date,176.63.243.237,Averyhaven,mobile,,factor marriage believe surface animal,-1,,159,,
-96320443,3,"(3,2,5)",,192.168.1,Smithfurt,,,fear,-1,unknown,-1,,
-26218029,1,,,192.168.1,,phone,,religious,-1,-1,640,,
-14568944,6,"(4,6,5)",11/5/2018 21:04,252.203.229.156,North Miguelmouth,tablet,,tell,NaN,unknown,NaN,,
-96503677,5,"(5,2,6)",not a date,256.256.256.256,Gillton,mobile,,"medical, financial, skin",NaN,NaN,unknown,,
-89949856,2,,not a date,108.186.77.192,,,,leave,NaN,-1,-1,,CN
-53816930,3,"(5,2,3)",1/15/2012 22:25,192.168.1,Luisborough,phone,,food look church anything,586,703,NaN,,JPN
-96889958,6,"(3,8,2)",,192.168.1,Port Ginahaven,phone,,entire with,336,unknown,,,
+FBUID,event_id,evcatcodes,timeonevent,ip_address,location,device,mentions,hashtags,content
+12611149,1235,"(2,1)",11/21/2017 20:10,192.168.1,Daybury,2015 Iphone 5,"biden, kelsey","democrat, election, primary, november",5
+79035077,724,,1/27/1987 6:20,192.168.1,Ramirezfurt,2017 Samsung Galaxy,Timothy,record study,
+67297762,53,"(2,5)",not a date,176.63.243.237,Averyhaven,2023 Iphone 15 Max,Kim,factor marriage believe surface animal,-1
+96320443,13,"(3,7)",1/27/1987 6:20,192.168.1,Smithfurt,Desktop,,fear,-1
+26218029,57,,1/27/1987 6:20,192.168.1,,2020 Macbook,"Petra, Timo",religious,-1
+14568944,809,"(6,5)",11/5/2018 21:04,252.203.229.156,North Miguelmouth,2023 LG laptop,,tell,NaN
+96503677,423,"(5,6)",not a date,256.256.256.256,Gillton,Laptop,,"medical, financial, skin",NaN
+89949856,43,,not a date,108.186.77.192,,,"Pony, pal",leave,NaN
+53816930,789,"(1, 3)",1/15/2012 22:25,192.168.1,Luisborough,Desktop,hal,food look church anything,586
+96889958,563,"4,8)",,192.168.1,Port Ginahaven,LG fridge,hme,entire with,336
